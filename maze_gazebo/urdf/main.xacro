@@ -1,0 +1,947 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="maze">
+
+
+  <!-- xacro include     -->
+  <xacro:include filename="$(find maze_gazebo)/urdf/drive_wheel_transmission.xacro" />
+  <xacro:include filename="$(find maze_gazebo)/urdf/castor_transmission.xacro" />
+  <xacro:include filename="$(find maze_gazebo)/urdf/castor_holder_transmission.xacro" />
+  <xacro:include filename="$(find maze_gazebo)/urdf/gazebo_plugin.xacro" />
+
+
+
+<!-- 
+
+  <link name="base_footprint"/>
+
+
+  <joint
+    name="base_joint"
+    type="fixed">
+    <origin
+      xyz="0.0 0.0 0.0"
+      rpy="0.0 0 0" />
+    <parent
+      link="base_footprint" />
+    <child
+      link="base_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint> -->
+
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0028869526654115 0.254001519517849 0.00673364367028377"
+        rpy="0 0 0" />
+      <mass
+        value="100" />
+      <inertia
+        ixx="0.3678033044408"
+        ixy="0.000139120659866531"
+        ixz="-0.00914770283838957"
+        iyy="0.501928528645378"
+        iyz="-0.000108362473444537"
+        izz="0.163130261499752" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+
+
+
+  <link name="imu_link"/>
+
+  <joint
+    name="imu_joint"
+    type="fixed">
+    <origin
+      xyz="0.0 0.0 0.0"
+      rpy="0.0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="imu_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+
+
+  <link
+    name="left_wheel_link">
+    <inertial>
+      <origin
+        xyz="-2.08166817117217E-17 0.0219259448586958 6.93889390390723E-18"
+        rpy="0 0 0" />
+      <mass
+        value="10" />
+      <inertia
+        ixx="0.000414738647732841"
+        ixy="6.4549731850148E-20"
+        ixz="-2.71050543121376E-20"
+        iyy="0.000767140680710609"
+        iyz="3.80672892035092E-19"
+        izz="0.000414738647732841" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/left_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/left_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.2452 0.032591 0.061977"
+      rpy="3.1416 0.31416 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="right_wheel_link">
+    <inertial>
+      <origin
+        xyz="-1.04083408558608E-17 0.0219259448586958 -6.93889390390723E-17"
+        rpy="0 0 0" />
+      <mass
+        value="10" />
+      <inertia
+        ixx="0.000414738647732841"
+        ixy="1.64957862874801E-19"
+        ixz="6.7762635780344E-21"
+        iyy="0.00076714068071061"
+        iyz="-8.30489493552148E-19"
+        izz="0.000414738647732841" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/right_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/right_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.2452 0.032591 0.061977"
+      rpy="3.1416 0.31416 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="front_left_holder_link">
+    <inertial>
+      <origin
+        xyz="-0.00943000039874498 0.0418885045472308 -7.92953525896589E-08"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000188864689361723"
+        ixy="5.48092823016774E-05"
+        ixz="-2.90932771313292E-10"
+        iyy="8.99090582990319E-05"
+        iyz="4.693844090958E-10"
+        izz="0.000192807336296954" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_left_holder_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_left_holder_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_holder_joint"
+    type="continuous">
+    <origin
+      xyz="0.20525 -0.30341 0.16147"
+      rpy="-1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_left_holder_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="front_left_castor_link">
+    <inertial>
+      <origin
+        xyz="-9.28563210131905E-05 0.000101299411731759 6.85127798938368E-09"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000389246550993186"
+        ixy="-1.33597214859002E-06"
+        ixz="-9.15816252780354E-11"
+        iyy="0.000389481196798406"
+        iyz="-4.42427927626012E-11"
+        izz="0.000700624875582138" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_left_castor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_left_castor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_castor_joint"
+    type="continuous">
+    <origin
+      xyz="-0.038115 0.097831 0"
+      rpy="0 0 0" />
+    <parent
+      link="front_left_holder_link" />
+    <child
+      link="front_left_castor_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="front_right_holder_link">
+    <inertial>
+      <origin
+        xyz="-0.00943000043442804 0.041888504621089 -7.9319022933122E-08"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000188864689908781"
+        ixy="5.48092825461241E-05"
+        ixz="-2.91010398715853E-10"
+        iyy="8.99090584618609E-05"
+        iyz="4.69544313247606E-10"
+        izz="0.000192807336902051" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_right_holder_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_right_holder_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_holder_joint"
+    type="continuous">
+    <origin
+      xyz="-0.20525 -0.30341 0.16147"
+      rpy="-1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_right_holder_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="front_right_castor_link">
+    <inertial>
+      <origin
+        xyz="-9.28563210131905E-05 0.000101299411731717 6.85127801713925E-09"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000389246550993186"
+        ixy="-1.33597214858998E-06"
+        ixz="-9.15816243250947E-11"
+        iyy="0.000389481196798407"
+        iyz="-4.42427935403515E-11"
+        izz="0.000700624875582138" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_right_castor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_right_castor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_castor_joint"
+    type="continuous">
+    <origin
+      xyz="-0.038115 0.097831 0"
+      rpy="0 0 0" />
+    <parent
+      link="front_right_holder_link" />
+    <child
+      link="front_right_castor_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="back_left_holder_link">
+    <inertial>
+      <origin
+        xyz="-0.0094300004344281 0.0418885046210891 -7.93190229608776E-08"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000188864689908782"
+        ixy="5.48092825461243E-05"
+        ixz="-2.91010398864748E-10"
+        iyy="8.99090584618611E-05"
+        iyz="4.69544313357925E-10"
+        izz="0.000192807336902051" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_left_holder_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_left_holder_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_left_holder_joint"
+    type="continuous">
+    <origin
+      xyz="0.205 0.31 0.1605"
+      rpy="-1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="back_left_holder_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="back_left_castor_link">
+    <inertial>
+      <origin
+        xyz="-9.2856321013135E-05 0.000101299411731717 6.85127801713925E-09"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000389246550993186"
+        ixy="-1.33597214859004E-06"
+        ixz="-9.15816243909476E-11"
+        iyy="0.000389481196798407"
+        iyz="-4.42427926356539E-11"
+        izz="0.000700624875582138" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_left_castor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_left_castor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_left_castor_joint"
+    type="continuous">
+    <origin
+      xyz="-0.038115 0.097831 0"
+      rpy="0 0 0" />
+    <parent
+      link="back_left_holder_link" />
+    <child
+      link="back_left_castor_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="back_right_holder_link">
+    <inertial>
+      <origin
+        xyz="-0.00942999097906383 0.0418884672695253 -7.16526934729789E-08"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000188864380636178"
+        ixy="5.48091770395005E-05"
+        ixz="-2.71913406948834E-10"
+        iyy="8.99090133197262E-05"
+        iyz="3.89406013638515E-10"
+        izz="0.000192807014745861" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_right_holder_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_right_holder_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_right_holder_joint"
+    type="continuous">
+    <origin
+      xyz="-0.205 0.31 0.1605"
+      rpy="-1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="back_right_holder_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="back_right_castor_link">
+    <inertial>
+      <origin
+        xyz="-9.28563210130795E-05 0.000101299411731759 6.85127801713925E-09"
+        rpy="0 0 0" />
+      <mass
+        value="5" />
+      <inertia
+        ixx="0.000389246550993186"
+        ixy="-1.33597214858997E-06"
+        ixz="-9.15816252797854E-11"
+        iyy="0.000389481196798407"
+        iyz="-4.42427916696972E-11"
+        izz="0.000700624875582138" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_right_castor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_right_castor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_right_castor_joint"
+    type="continuous">
+    <origin
+      xyz="-0.038115 0.097831 0"
+      rpy="0 0 0" />
+    <parent
+      link="back_right_holder_link" />
+    <child
+      link="back_right_castor_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="front_lidar_link">
+    <inertial>
+      <origin
+        xyz="8.51201189117079E-07 -0.0382360550578659 0.00253382888216747"
+        rpy="0 0 0" />
+      <mass
+        value="0.99478483013009" />
+      <inertia
+        ixx="0.00207441181473986"
+        ixy="1.2183925548538E-08"
+        ixz="-3.06157051925982E-08"
+        iyy="0.00130250432991971"
+        iyz="-1.97826766383176E-06"
+        izz="0.00204749914416029" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_lidar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_lidar_joint"
+    type="fixed">
+    <origin
+      xyz="0.23711 -0.39365 0.19206"
+      rpy="-1.5708 0 0.78523" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="back_lidar_link">
+    <inertial>
+      <origin
+        xyz="8.5120118942239E-07 -0.038236055057866 0.00253382888216869"
+        rpy="0 0 0" />
+      <mass
+        value="0.994784830130092" />
+      <inertia
+        ixx="0.00207441181474926"
+        ixy="1.21839258570294E-08"
+        ixz="-3.06157085219663E-08"
+        iyy="0.00130250432992991"
+        iyz="-1.97826766347885E-06"
+        izz="0.0020474991441613" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/back_lidar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_lidar_joint"
+    type="fixed">
+    <origin
+      xyz="-0.23711 0.39365 0.19206"
+      rpy="-1.5708 0 -2.3564" />
+    <parent
+      link="base_link" />
+    <child
+      link="back_lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="front_depth_sense_link">
+    <inertial>
+      <origin
+        xyz="0.00639807454467763 0.000259185843232146 0.00402276187249434"
+        rpy="0 0 0" />
+      <mass
+        value="0.0156859297221197" />
+      <inertia
+        ixx="6.16300882610128E-07"
+        ixy="4.12499684223477E-07"
+        ixz="-4.33030175755976E-08"
+        iyy="2.39004372893522E-05"
+        iyz="1.73130955374426E-09"
+        izz="2.4301132150604E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_depth_sense_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_depth_sense_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_depth_sense_joint"
+    type="fixed">
+    <origin
+      xyz="0.0036662 -0.41333 0.27884"
+      rpy="1.5533 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_depth_sense_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="front_left_us_link">
+    <inertial>
+      <origin
+        xyz="3.16719926685138E-06 1.07108254000232E-05 0.00564761949829307"
+        rpy="0 0 0" />
+      <mass
+        value="0.00659226374288694" />
+      <inertia
+        ixx="2.62164366417446E-07"
+        ixy="2.19454243662852E-10"
+        ixz="1.68518136394502E-10"
+        iyy="1.29017463006738E-06"
+        iyz="4.85941108653776E-09"
+        izz="1.31002616867467E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_left_us_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_left_us_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_us_joint"
+    type="fixed">
+    <origin
+      xyz="0.13289 -0.41252 0.166"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_left_us_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="front_right_us_link">
+    <inertial>
+      <origin
+        xyz="3.16719926674036E-06 1.07108254000232E-05 0.00564761949829301"
+        rpy="0 0 0" />
+      <mass
+        value="0.00659226374288695" />
+      <inertia
+        ixx="2.62164366417447E-07"
+        ixy="2.19454243663251E-10"
+        ixz="1.68518136375718E-10"
+        iyy="1.29017463006738E-06"
+        iyz="4.85941108653799E-09"
+        izz="1.31002616867467E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_right_us_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/front_right_us_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_us_joint"
+    type="fixed">
+    <origin
+      xyz="-0.13291 -0.41252 0.166"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_right_us_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="docking_point_link">
+    <inertial>
+      <origin
+        xyz="-3.36712537192529E-17 0.025 -4.44089209850063E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0197436309804578" />
+      <inertia
+        ixx="1.06382161218638E-06"
+        ixy="1.96745794540425E-21"
+        ixz="-5.22424584653053E-19"
+        iyy="1.63446093202912E-05"
+        iyz="-1.70192980777725E-21"
+        izz="1.7355781249863E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/docking_point_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://maze_gazebo/meshes/docking_point_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="docking_point_joint"
+    type="fixed">
+    <origin
+      xyz="-6.0377E-05 -0.42002 0.145"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="docking_point_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+
+
+</robot>

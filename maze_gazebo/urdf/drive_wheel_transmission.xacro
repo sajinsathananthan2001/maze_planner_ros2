@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="maze">
+    
+  <!-- for left drive wheel -->
+
+  <!-- This block provides the simulator (Gazebo) with information on a few additional
+  physical properties. See http://gazebosim.org/tutorials/?tut=ros_urdf for more-->
+  <gazebo reference="left_wheel_link">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!-- This block connects the wheel joint to an actuator (motor), which informs both
+  simulation and visualization of the robot -->
+  <transmission name="drive_wheel_left_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="drive_wheel_left_motor">
+          <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="left_wheel_joint">
+          <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+  </transmission>
+
+  <!-- for right drive wheel -->
+
+  <!-- This block provides the simulator (Gazebo) with information on a few additional
+  physical properties. See http://gazebosim.org/tutorials/?tut=ros_urdf for more-->
+  <gazebo reference="right_wheel_link">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!-- This block connects the wheel joint to an actuator (motor), which informs both
+  simulation and visualization of the robot -->
+  <transmission name="drive_wheel_right_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="drive_wheel_right_motor">
+          <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="right_wheel_joint">
+          <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+  </transmission>
+
+</robot>

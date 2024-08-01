@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="maze">
+    
+
+    <transmission name="front_left_castor_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="front_left_castor_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="front_left_castor_joint">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+
+
+
+    <transmission name="back_left_castor_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="back_left_castor_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="back_left_castor_joint">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+
+
+
+     <transmission name="front_right_castor_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="front_right_castor_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="front_right_castor_joint">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+
+    
+
+     <transmission name="back_right_castor_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="back_right_castor_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="back_right_castor_joint">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+</robot>
