@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(maze_gazebo)
+project(maze_description)
 
 
 # Default to C++14
@@ -30,5 +30,5 @@ find_package(ament_cmake REQUIRED)
 ament_package()
 
 
-install(DIRECTORY meshes urdf config DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY meshes urdf rviz DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})

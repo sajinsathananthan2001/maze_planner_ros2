@@ -36,14 +36,14 @@ def load_yaml(package_name, file_path):
 ARGUMENTS = [
     DeclareLaunchArgument(
         'model',
-        default_value='maze_gazebo',
+        default_value='maze_description',
         description='Robot Model'
     )
     ]	
 
 def generate_launch_description():
     
-    urdf_path = os.path.join(get_package_share_directory('maze_gazebo'), 'urdf')
+    urdf_path = os.path.join(get_package_share_directory('maze_description'), 'urdf')
     urdf_path=urdf_path + '/main.xacro'
     world = os.path.join(
         get_package_share_directory('d_bot_gazebo'),
@@ -51,18 +51,18 @@ def generate_launch_description():
         'cafe.world'
     )
     # RViz 
-    # rviz_config_file = get_package_share_directory('d_bot_navigation') + "/rviz/navigation.rviz" #add your rviz config 
+    rviz_config_file = get_package_share_directory('maze_description') + "/rviz/rviz.rviz" #add your rviz config 
     rviz_node = Node(package='rviz2',
                      executable='rviz2',
                      name='rviz2',
                      output='log',
-                     arguments=['-d'])
+                     arguments=['-d', rviz_config_file])
     
     gzserver_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gzserver.launch.py')
         ),
-        launch_arguments={'world': world}.items(),
+        launch_arguments={'world': world,'pause': 'false'}.items(),
     )
 
     gzclient_cmd = IncludeLaunchDescription(
@@ -72,10 +72,19 @@ def generate_launch_description():
     )
     robot_gazebo = Node(
             package='gazebo_ros', executable='spawn_entity.py',
-            arguments=['-topic', '/robot_description', '-entity', 'maze_gazebo', '-x', '0', '-y', '0', '-z', '1.0',
+            arguments=['-topic', '/robot_description', '-entity', 'maze_description', '-x', '0', '-y', '0', '-z', '0.2',
                 '-R', '0', '-P', '0', '-Y', '0',
                 ],
             output='screen')
+    
+    joint_state_publisher=Node(
+            package='joint_state_publisher',
+            executable='joint_state_publisher',
+            name='joint_state_publisher',
+            parameters=[
+                {'use_sim_time': True}
+            ]
+        )
     
     # Publish TF
     robot_state_publisher = Node(package='robot_state_publisher',
@@ -85,4 +94,4 @@ def generate_launch_description():
                                  parameters=[
                                     {'robot_description': launch_ros.descriptions.ParameterValue(substitutions.Command(['xacro ',urdf_path]), value_type=str)}])
 
-    return LaunchDescription(ARGUMENTS + [gzserver_cmd, gzclient_cmd, robot_state_publisher, robot_gazebo, rviz_node])
+    return LaunchDescription(ARGUMENTS + [joint_state_publisher,gzserver_cmd, gzclient_cmd, robot_state_publisher, robot_gazebo, rviz_node]) #joint_state_publisher,

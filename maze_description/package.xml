@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>maze_gazebo</name>
+  <name>maze_description</name>
   <version>0.0.0</version>
   <description>
     <p>URDF Description package for maze</p>
@@ -12,7 +12,6 @@ for maze planner   robot</p>
   <license>BSD</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-
 
   <exec_depend>ament_index_python</exec_depend>
   <exec_depend>launch</exec_depend>
@@ -28,5 +27,6 @@ for maze planner   robot</p>
 
   <export>
     <build_type>ament_cmake</build_type>
+    <gazebo_ros gazebo_model_path="${prefix}/.." />
   </export>
 </package>
