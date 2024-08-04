@@ -46,9 +46,9 @@ def generate_launch_description():
     urdf_path = os.path.join(get_package_share_directory('maze_description'), 'urdf')
     urdf_path=urdf_path + '/main.xacro'
     world = os.path.join(
-        get_package_share_directory('d_bot_gazebo'),
+        get_package_share_directory('maze_gazebo'),
         'worlds',
-        'cafe.world'
+        'maze_camera.world'
     )
     # RViz 
     rviz_config_file = get_package_share_directory('maze_description') + "/rviz/rviz.rviz" #add your rviz config 
@@ -62,6 +62,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gzserver.launch.py')
         ),
+        # launch_arguments={'world': world,'pause': 'false'}.items(),
         launch_arguments={'world': world,'pause': 'false'}.items(),
     )
 
@@ -94,4 +95,4 @@ def generate_launch_description():
                                  parameters=[
                                     {'robot_description': launch_ros.descriptions.ParameterValue(substitutions.Command(['xacro ',urdf_path]), value_type=str)}])
 
-    return LaunchDescription(ARGUMENTS + [joint_state_publisher,gzserver_cmd, gzclient_cmd, robot_state_publisher, robot_gazebo, rviz_node]) #joint_state_publisher,
+    return LaunchDescription(ARGUMENTS + [joint_state_publisher,gzserver_cmd, gzclient_cmd, robot_state_publisher,robot_gazebo, rviz_node]) #joint_state_publisher,

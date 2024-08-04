@@ -21,7 +21,7 @@
       <kd value="1"/>
       <minDepth>0.001</minDepth>
       <fdir1>0 0 0</fdir1>
-      <max_vel>1</max_vel>
+      <max_vel>0.5</max_vel>
     </gazebo>
   </xacro:macro>
     
@@ -34,20 +34,20 @@
 
 
 <!-- friction for drive wheels -->
-<xacro:set_wheel_friction link="left_wheel_link" friction="10"/>
-<xacro:set_wheel_friction link="right_wheel_link" friction="10"/>
+<xacro:set_wheel_friction link="left_wheel_link" friction="1"/>
+<xacro:set_wheel_friction link="right_wheel_link" friction="1"/>
 
 <!-- friction for caster wheels -->
-<xacro:set_wheel_friction link="front_right_castor_link" friction="0.1"/>
-<xacro:set_wheel_friction link="back_right_castor_link" friction="0.1"/>
-<xacro:set_wheel_friction link="front_left_castor_link" friction="0.1"/>
-<xacro:set_wheel_friction link="back_left_castor_link" friction="0.1"/>
+<xacro:set_wheel_friction link="front_right_castor_link" friction="100000"/>
+<xacro:set_wheel_friction link="back_right_castor_link" friction="100000"/>
+<xacro:set_wheel_friction link="front_left_castor_link" friction="100000"/>
+<xacro:set_wheel_friction link="back_left_castor_link" friction="100000"/>
 
 <!-- friction for caster handle -->
-<xacro:set_castor_joint_friction link="front_right_holder_link" friction="2"/>
-<xacro:set_castor_joint_friction link="back_right_holder_link" friction="2"/>
-<xacro:set_castor_joint_friction link="front_left_holder_link" friction="2"/>
-<xacro:set_castor_joint_friction link="back_left_holder_link" friction="2"/>
+<xacro:set_castor_joint_friction link="front_right_holder_link" friction="100"/>
+<xacro:set_castor_joint_friction link="back_right_holder_link" friction="100"/>
+<xacro:set_castor_joint_friction link="front_left_holder_link" friction="100"/>
+<xacro:set_castor_joint_friction link="back_left_holder_link" friction="100"/>
 
 
   <gazebo reference="imu_link">
